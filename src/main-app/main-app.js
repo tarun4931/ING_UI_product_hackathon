@@ -80,14 +80,13 @@ color: #ff6200;
 <app-drawer-layout has-scrolling-region responsive-width="940px">
     <app-drawer swipe-open slot="drawer">
         <app-header-layout has-scrolling-region>
-           <!-- <iron-image sizing="cover" preload src="../images/ING_logo.png"></iron-image>
-            -->
+           <iron-image sizing="cover" preload src="../images/ING_logo.png"></iron-image>
         </<app-header-layout>
     </app-drawer>
-    <!-- <analytic-data></analytic-data> -->
     <iron-pages selected="[[page]]" attr-for-selected="name" selected-attribute="visible" fallback-selection="404">
-      <product-group name="products"></product-group>
+      <product-group name="products" route="{{route}}"></product-group>
       <product-details name="details" route="{{subroute}}"></product-group>
+      <analytics-data name="analytics"></analytics-data>
     </iron-pages>
 </app-drawer-layout>
     `;
@@ -113,6 +112,7 @@ _routeChanged(page) {
 }
 
 _pageChanged(currentPage, oldPage) {
+
 switch (currentPage) {
   case 'products':
       import('./product-group.js');
@@ -120,9 +120,12 @@ switch (currentPage) {
   case 'details':
       import('./product-details.js');
       break;
+  case 'analytics':
+      import('./product-analytics.js');
+      break;
   default:
       this.page = 'products';
-    }
+}
 }
   _toggleDrawer() {
     var drawer = this.shadowRoot.querySelector('app-drawer');

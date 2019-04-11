@@ -27,7 +27,6 @@ class ProductDetails extends PolymerElement{
         }
     }
     handleResponse(event){
-        console.log('RES - ',event.detail.response);
         this.$.getAllGroups.generateRequest();
         if(event.detail.response){
             this.productDetails  = event.detail.response;
@@ -41,6 +40,8 @@ class ProductDetails extends PolymerElement{
             this.productGroups = event.detail.response.filter((obj) => {
                 return obj.id !== parseInt(this.routeData.productId);
             });
+        }else{
+            this.errorMessage = 'No other Products to display';
         }
     }
     handleGroup(event){
@@ -68,13 +69,33 @@ class ProductDetails extends PolymerElement{
             <h1>Product Details</h1>
             <h3>Group Name: {{groupName.0.name}}</h3>
             <h3 class="text-primary">Product Name: {{productDetails.name}}</h3>
-            <paper-toast id="toast" text="[[toastMessage]]" with-backdrop horizontal-align="center" vertical-align="middle"></paper-toast>
+            <paper-toast id="toast" text="[[toastMessage]]" horizontal-align="center" vertical-align="middle"></paper-toast>
             <div class="col-sm-12 d-flex justify-content-center align-content-center">
                 <paper-spinner active="{{loadingData}}"></paper-spinner>
             </div>
             <app-route route="{{route}}" pattern="/:groupId/:productId" data="{{routeData}}" tail="{{subroute}}"></app-route>
             <div class="col-sm-12 col-md-12">
-                {{productDetails.name}}
+                
+                <div class="col-sm-6 col-md-6 offset-sm-2">
+                    <div class="form-group">
+                        <label>Interest Rate:</label> {{productDetails.interestrate}}
+                    </div>
+                    <div class="form-group">
+                        <label>Percentage:</label> {{productDetails.percentage}}
+                    </div>
+                    <div class="form-group">
+                        <label>Special:</label> {{productDetails.special}}
+                    </div>
+                    <div class="form-group">
+                        <label>withDrawl:</label> {{productDetails.withdrawl}}
+                    </div>
+                    <div class="form-group">
+                        <label>minLeg:</label> {{productDetails.minleg}}
+                    </div>
+                    <div class="form-group">
+                        <label>MarLeg:</label> {{productDetails.marleg}}
+                    </div>
+                </div>
                 <h3>Other Products</h3>
                 <ul style="list-unstyled">
                     <template is="dom-repeat" items="{{productGroups}}">
@@ -115,7 +136,6 @@ class ProductDetails extends PolymerElement{
             loading="{{loadingData}}"
             >
       </iron-ajax>
-     
         `
     }
 }

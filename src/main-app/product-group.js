@@ -30,6 +30,9 @@ class ProductGroup extends PolymerElement{
             subProducts:{
                 type: Array,
                 value: []
+            },
+            subProductID:{
+              type: String
             }
         }
     }
@@ -41,7 +44,7 @@ class ProductGroup extends PolymerElement{
             this.allProducts  = event.detail.response;
             this.getProducts();
         }else{
-          this.toastMessage = "Products are not available";
+          this.toastMessage = "Products Groups are not available";
           this.$.toast.open();
         }
       }
@@ -63,6 +66,23 @@ class ProductGroup extends PolymerElement{
       handleProducts(event){
           if(event.detail.response.length > 0){
             this.subProducts = event.detail.response;
+          }else{
+            this.toastMessage = "No Products to display";
+            this.$.toast.open();
+          }
+      }
+      getProdID(event){
+        this.subProductID = event.model.item.id;
+        if(this.subProductID){
+          this.$.getProDetails.generateRequest();
+        }
+      }
+      handleProductDetails(event){
+          if(event.detail.response.status){
+            this.set('route.path', '/details/' + this.productId + '/' + this.subProductID);
+          }else{
+            this.toastMessage = "No Product Details to Display";
+            this.$.toast.open();
           }
       }
 
@@ -70,20 +90,20 @@ class ProductGroup extends PolymerElement{
         return html `
         ${sharedStyle}
             <h1>Product group </h1>
-            <paper-toast id="toast" text="[[toastMessage]]" with-backdrop horizontal-align="center" vertical-align="middle"></paper-toast>
+            <paper-toast id="toast" text="[[toastMessage]]" horizontal-align="center" vertical-align="middle"></paper-toast>
             <div class="col-sm-12 d-flex justify-content-center align-content-center">
                 <paper-spinner active="{{loadingData}}"></paper-spinner>
             </div>
-            <div class="col-sm-6 col-md-6 offset-sm-2 offset-md-2">
+            <div class="col-sm-6 col-md-6 offset-sm-2 offset-md-2 border">
             <vaadin-accordion>
             <template is="dom-repeat" items="{{allProducts}}" as="product">
                 <vaadin-accordion-panel>
-                  <div slot="summary" on-click="getProducts">{{product.name}}</div>
+                  <div slot="summary" on-click="getProducts">{{product.name}} | {{product.count}}</div>
                   <vaadin-vertical-layout>
                     <div class="col-sm-12">
-                        <ul class="list-unstyled">
+                        <ul class="list-group">
                             <template is="dom-repeat" items="{{subProducts}}">
-                                <li><a href="#/details/[[product.id]]/[[item.id]]">{{item.name}}</a></li>
+                                <li class="list-group-item" on-click="getProdID">{{item.name}}</li>
                             </template>
                         </ul>
                     </div>
@@ -109,6 +129,17 @@ class ProductGroup extends PolymerElement{
             method="get"
             content-type="application/json"
             on-response="handleProducts"
+            on-error="handleError"
+            handle-as="json"
+            loading="{{loadingData}}"
+            >
+      </iron-ajax>
+      <iron-ajax
+            id="getProDetails"
+            url="[[productsURL]]/product/[[subProductID]]"
+            method="get"
+            content-type="application/json"
+            on-response="handleProductDetails"
             on-error="handleError"
             handle-as="json"
             loading="{{loadingData}}"
