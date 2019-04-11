@@ -48,7 +48,6 @@ class ProductDetails extends PolymerElement{
         if(event.detail.response){
             this.allProducts  = event.detail.response;
             this.groupName = event.detail.response.filter((prod) => {
-                console.log(prod.id, this.routeData.groupId);
                 return prod.id === parseInt(this.routeData.groupId);
             })
         }else{

@@ -47,7 +47,6 @@ class ProductGroup extends PolymerElement{
         }
     }
     _productChanged(newVal, oldVal){
-      console.log(newVal);
     }
     getProductGroupURL(){
      return config.baseURL + '/groups';
@@ -160,7 +159,6 @@ class ProductGroup extends PolymerElement{
          .attr("height", function(d) { return height - yScale(d.count); });
       }
       handleAnalytics(event){
-        console.log(event.detail.response);
         if(event.detail.response.length > 0){
           let data = event.detail.response.map((obj) => {
             return {
