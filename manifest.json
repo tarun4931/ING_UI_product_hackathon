@@ -1,7 +1,6 @@
 {
-  "name": "hackathon",
-  "short_name": "hackathon",
-  "description": "Hackathon Application",
+  "name": "produ",
+  "short_name": "produ",
   "start_url": "/",
   "display": "standalone"
 }

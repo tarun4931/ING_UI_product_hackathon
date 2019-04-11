@@ -4,17 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>hackathon</title>
-    <meta name="description" content="Hackathon Application">
+    <title>produ</title>
+    <meta name="description" content="produ description">
 
     <!-- See https://goo.gl/OOhYW5 -->
     <link rel="manifest" href="./manifest.json">
-
+    <link rel="shortcut icon" sizes="32x32" aria-label="ING" href="./images/ING.jfif">
     <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
-    <script type="module" src="./src/main-app/main-app.js" crossorigin></script>
+    <script type="module" src="/src/products-app/products-app.js" crossorigin></script>
   </head>
   <body>
-    <main-app></main-app>
+    <products-app></products-app>
+    <script>
+      if('serviceWorker' in navigator){
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./service-worker.js');
+        })
+      }
+    </script>
   </body>
 </html>

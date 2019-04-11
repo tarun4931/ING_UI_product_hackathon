@@ -1,6 +1,5 @@
 {
-  "name": "hackathon",
-  "description": "Hackathon Application",
+  "name": "produ",
   "dependencies": {
     "@polymer/polymer": "^3.0.0",
     "web-animations-js": "^2.3.1"

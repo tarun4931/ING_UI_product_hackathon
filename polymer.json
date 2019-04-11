@@ -1,13 +1,12 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/main-app/main-app.js",
+  "shell": "src/products-app/products-app.js",
   "sources": [
     "images/**/*"
   ],
   "extraDependencies": [
     "manifest.json",
-    "node_modules/@webcomponents/webcomponentsjs/**",
-    "node_modules/web-animations-js/web-animations-next-lite.min.js"
+    "node_modules/@webcomponents/webcomponentsjs/**"  
   ],
   "builds": [
     {
@@ -15,7 +14,6 @@
       "preset": "es5-bundled"
     }
   ],
-  "moduleResolution": "node",
   "npm": true,
   "lint": {
     "rules": [
