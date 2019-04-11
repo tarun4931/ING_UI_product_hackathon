@@ -2,7 +2,8 @@
   "name": "hackathon",
   "description": "Hackathon Application",
   "dependencies": {
-    "@polymer/polymer": "^3.0.0"
+    "@polymer/polymer": "^3.0.0",
+    "web-animations-js": "^2.3.1"
   },
   "devDependencies": {
     "@polymer/test-fixture": "^4.0.2",
