@@ -12,6 +12,7 @@ import '@polymer/paper-icon-button/paper-icon-button.js';
 import '@polymer/paper-item/paper-item.js';
 import '@polymer/paper-listbox/paper-listbox.js';
 import '@polymer/iron-image/iron-image.js';
+import '../components/analytic-data.js';
 
 /**
  * @customElement
@@ -20,6 +21,10 @@ import '@polymer/iron-image/iron-image.js';
 class MainApp extends PolymerElement {
   constructor(){
     super();
+    this.limit = 5;
+    this.url= "https://jsonplaceholder.typicode.com/posts";
+    this.method = "GET";
+    this.pagination = true;
   }
   static get template() {
     return html`
@@ -80,19 +85,14 @@ color: #ff6200;
 <app-drawer-layout has-scrolling-region responsive-width="940px">
     <app-drawer swipe-open slot="drawer">
         <app-header-layout has-scrolling-region>
-            <!-- <iron-image sizing="cover" preload src="../images/ING_logo.png"></iron-image>
-            <paper-listbox>
-                <paper-item>
-                      <a href="#/grid"> Grid </a>
-                </paper-item>
-                <paper-item>
-                      <a href="#/review"> Review </a>
-                </paper-item>
-            </paper-listbox> -->
+           <!-- <iron-image sizing="cover" preload src="../images/ING_logo.png"></iron-image>
+            -->
         </<app-header-layout>
     </app-drawer>
+    <!-- <analytic-data></analytic-data> -->
     <iron-pages selected="[[page]]" attr-for-selected="name" selected-attribute="visible" fallback-selection="404">
       <product-group name="products"></product-group>
+      <product-details name="details"></product-group>
     </iron-pages>
 </app-drawer-layout>
     `;
@@ -119,8 +119,11 @@ _routeChanged(page) {
 
 _pageChanged(currentPage, oldPage) {
 switch (currentPage) {
-  case 'grid':
-      import('../products/products-group.js');
+  case 'products':
+      import('./product-group.js');
+      break;
+  case 'products':
+      import('./product-details.js');
       break;
   default:
       this.page = 'products';

@@ -7,7 +7,8 @@
   "extraDependencies": [
     "manifest.json",
     "node_modules/@webcomponents/webcomponentsjs/**",
-    "node_modules/web-animations-js/web-animations-next-lite.min.js"
+    "node_modules/web-animations-js/web-animations-next-lite.min.js",
+    "config.js"
   ],
   "builds": [
     {

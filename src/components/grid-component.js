@@ -54,39 +54,15 @@ class GridComponent extends PolymerElement{
 
         <paper-toast id="toast" text="[[toastMessage]]" with-backdrop horizontal-align="center" vertical-align="middle"></paper-toast>
         <template is="dom-if" if="[[!loadingData]]">
-          <!-- <vaadin-grid aria-label="Basic Binding Example" items="[[allUsers]]">
-            <vaadin-grid-column>
-              <template class="header">
-                <vaadin-grid-sorter path="id">ID</vaadin-grid-sorter>
-              </template>
-              <template>
-                [[item.id]]
-              </template>
-            </vaadin-grid-column>
-            <vaadin-grid-column>
-              <template class="header">
-                <vaadin-grid-sorter path="name">UserId</vaadin-grid-sorter>
-              </template>
-              <template>[[item.userId]]</template>
-            </vaadin-grid-column>
-            <vaadin-grid-column>
-              <template class="header">
-                <vaadin-grid-sorter path="email">Title</vaadin-grid-sorter>
-              </template>
-              <template>[[item.title]]</template>
-            </vaadin-grid-column>
-          </vaadin-grid> -->
           <div class="col-sm-12 col-md-12 col-xs-12 border">
+          [[allUsers.length]]
           <vaadin-accordion>
-            <template is="dom-repeat" items="[[allUsers]]" as="post">
+            <template is="dom-repeat" items="[[allUsers]]" as="product">
                 <vaadin-accordion-panel>
-                  <div slot="summary">[[post.title]]</div>
+                  <div slot="summary">[[product.name]]</div>
                   <vaadin-vertical-layout>
                     <div class="col-sm-12">
-                        [[post.body]]
-                        <paper-button raised>
-                          <a href="#/review/[[post.userId]]">Review</a>
-                        </paper-button>
+                        Body  
                     </div>
                   </vaadin-vertical-layout>
                 </vaadin-accordion-panel>
@@ -119,11 +95,10 @@ class GridComponent extends PolymerElement{
     `
   }
   handleResponse(event){
+    console.log(event.detail.response);
     if(event.detail.response.length>0){
-      this.toastMessage = "API Processed Successfully";
-      this.$.toast.open();
-      this.allUsers = event.detail.response;
-      this.users = event.detail.response;
+      console.log('IN ');
+      this.set('allUsers',event.detail.response);
       if(this.pagination){
         this.paginate(this.allUsers.length, this.limit);
       }
