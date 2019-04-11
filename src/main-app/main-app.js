@@ -12,7 +12,6 @@ import '@polymer/paper-icon-button/paper-icon-button.js';
 import '@polymer/paper-item/paper-item.js';
 import '@polymer/paper-listbox/paper-listbox.js';
 import '@polymer/iron-image/iron-image.js';
-import '../components/analytic-data.js';
 
 /**
  * @customElement
@@ -21,10 +20,6 @@ import '../components/analytic-data.js';
 class MainApp extends PolymerElement {
   constructor(){
     super();
-    this.limit = 5;
-    this.url= "https://jsonplaceholder.typicode.com/posts";
-    this.method = "GET";
-    this.pagination = true;
   }
   static get template() {
     return html`
@@ -92,7 +87,7 @@ color: #ff6200;
     <!-- <analytic-data></analytic-data> -->
     <iron-pages selected="[[page]]" attr-for-selected="name" selected-attribute="visible" fallback-selection="404">
       <product-group name="products"></product-group>
-      <product-details name="details"></product-group>
+      <product-details name="details" route="{{subroute}}"></product-group>
     </iron-pages>
 </app-drawer-layout>
     `;
@@ -122,7 +117,7 @@ switch (currentPage) {
   case 'products':
       import('./product-group.js');
       break;
-  case 'products':
+  case 'details':
       import('./product-details.js');
       break;
   default:

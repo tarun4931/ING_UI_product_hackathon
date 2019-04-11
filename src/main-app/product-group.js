@@ -9,9 +9,6 @@ import { sharedStyle } from '../shared-style/shared-style.js';
 class ProductGroup extends PolymerElement{
     constructor(){
         super();
-        this.url = config.baseURL + '/groups';
-        this.method = "get";
-        this.pagination = false;
     }
     static get properties(){
         return {
@@ -40,12 +37,12 @@ class ProductGroup extends PolymerElement{
      return config.baseURL + '/groups';
     }
     handleResponse(event){
-        console.log(event.detail.response);
         if(event.detail.response.length>0){
             this.allProducts  = event.detail.response;
-            console.log(this.allProducts);
+            this.getProducts();
         }else{
-          this.toastMessage = "Users are not available";
+          this.toastMessage = "Products are not available";
+          this.$.toast.open();
         }
       }
       handleError(event){
@@ -55,7 +52,11 @@ class ProductGroup extends PolymerElement{
         }
       }
       getProducts(event){
-        this.productId = event.model.product.id;
+        if(event){
+          this.productId = event.model.product.id;
+        }else{
+          this.productId = this.allProducts[0].id;
+        }
         this.$.getProducts.generateRequest();
       }
       
@@ -82,7 +83,7 @@ class ProductGroup extends PolymerElement{
                     <div class="col-sm-12">
                         <ul class="list-unstyled">
                             <template is="dom-repeat" items="{{subProducts}}">
-                                <li><a href="#/details/[[item.id]]">{{item.name}}</a></li>
+                                <li><a href="#/details/[[product.id]]/[[item.id]]">{{item.name}}</a></li>
                             </template>
                         </ul>
                     </div>
