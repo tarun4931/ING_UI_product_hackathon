@@ -40,9 +40,14 @@ class ProductGroup extends PolymerElement{
               type: String
             },
             selectedProduct:{
-              type: String
+              type: String,
+              value: '0',
+              observe: '_productChanged'
             }
         }
+    }
+    _productChanged(newVal, oldVal){
+      console.log(newVal);
     }
     getProductGroupURL(){
      return config.baseURL + '/groups';
@@ -165,6 +170,9 @@ class ProductGroup extends PolymerElement{
           });
           this.$.dialog.open();
           this.getCharts(data);
+        }else{
+          this.toastMessage = 'No Data to display';
+          this.$.toast.open();
         }
       }
 
@@ -174,7 +182,13 @@ class ProductGroup extends PolymerElement{
             <h1>Product group </h1>
             <paper-dialog id="dialog">
               <h2>Content</h2>
-              
+              <paper-dropdown-menu label="Dinosaurs">
+                <paper-listbox slot="dropdown-content" attr-for-selected="name" class="dropdown-content" selected="{{selectedProduct}}">
+                  <template is="dom-repeat" items="{{allProducts}}">
+                  <paper-item name="{{item.name}}">{{item.name}}</paper-item>
+                  </template>
+                </paper-listbox>
+              </paper-dropdown-menu>
               <div>
                 <svg id="mySVG" width="600" height="500"></svg>              
               </div>
