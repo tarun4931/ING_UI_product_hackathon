@@ -3,6 +3,7 @@ import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/app-route/app-route.js';
 import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/paper-spinner/paper-spinner.js';
+import { sharedStyle } from '../shared-style/shared-style.js';
 
 class ProductDetails extends PolymerElement{
     static get properties(){
@@ -36,8 +37,6 @@ class ProductDetails extends PolymerElement{
         }
     }
     handleProductGroups(event){
-        console.log('prod - ',event.detail.response);
-
         if(event.detail.response.length > 0){
             this.productGroups = event.detail.response.filter((obj) => {
                 return obj.id !== parseInt(this.routeData.productId);
@@ -65,15 +64,16 @@ class ProductDetails extends PolymerElement{
       }
     static get template(){
         return html `
+        ${sharedStyle}
             <h1>Product Details</h1>
             <h3>Group Name: {{groupName.0.name}}</h3>
-            
+            <h3 class="text-primary">Product Name: {{productDetails.name}}</h3>
             <paper-toast id="toast" text="[[toastMessage]]" with-backdrop horizontal-align="center" vertical-align="middle"></paper-toast>
             <div class="col-sm-12 d-flex justify-content-center align-content-center">
                 <paper-spinner active="{{loadingData}}"></paper-spinner>
             </div>
             <app-route route="{{route}}" pattern="/:groupId/:productId" data="{{routeData}}" tail="{{subroute}}"></app-route>
-            <div class="col-sm-6 col-md-6 offset-sm-2 offset-md-2">
+            <div class="col-sm-12 col-md-12">
                 {{productDetails.name}}
                 <h3>Other Products</h3>
                 <ul style="list-unstyled">
