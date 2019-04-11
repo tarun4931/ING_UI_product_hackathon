@@ -3,18 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-
-    <title>produ</title>
-    <meta name="description" content="produ description">
+    <meta name="theme-color" content="#fff">
+    <title>main</title>
+    <meta name="description" content="main description">
 
     <!-- See https://goo.gl/OOhYW5 -->
     <link rel="manifest" href="./manifest.json">
-    <link rel="shortcut icon" sizes="32x32" aria-label="ING" href="./images/ING.jfif">
+    <link rel="shortcut icon" sizes="32x32" href="./images/ING.jfif">
     <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script type="module" src="/src/products-app/products-app.js" crossorigin></script>
+    <script src="./node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
+    <script type="module" src="./src/products/main-app.js" crossorigin></script>
   </head>
   <body>
-    <products-app></products-app>
+    <main-app></main-app>
     <script>
       if('serviceWorker' in navigator){
         window.addEventListener('load', () => {
