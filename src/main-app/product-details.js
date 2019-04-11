@@ -33,7 +33,7 @@ class ProductDetails extends PolymerElement{
         }
     }
     handleError(event){
-        this.$.getAllGroups.generateRequest();
+        // this.$.getAllGroups.generateRequest();
         if(event){
           this.toastMessage = "Unable to process the request";
           this.$.toast.open();
