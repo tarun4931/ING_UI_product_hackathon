@@ -14,22 +14,46 @@ class ProductDetails extends PolymerElement{
             detailsUrl:{
                 type: String,
                 value: config.baseURL
+            },
+            allProducts:{
+                type: Array,
+                value: []
+            },
+            groupName:{
+                type: Array
             }
+            
         }
     }
     handleResponse(event){
+        console.log('RES - ',event.detail.response);
         this.$.getAllGroups.generateRequest();
-        if(event.detail.response.length>0){
+        if(event.detail.response){
             this.productDetails  = event.detail.response;
         }else{
-          this.toastMessage = "Users are not available";
+          this.toastMessage = "Products are not available";
+          this.$.toast.open();
         }
     }
     handleProductGroups(event){
+        console.log('prod - ',event.detail.response);
+
         if(event.detail.response.length > 0){
             this.productGroups = event.detail.response.filter((obj) => {
                 return obj.id !== parseInt(this.routeData.productId);
             });
+        }
+    }
+    handleGroup(event){
+        if(event.detail.response){
+            this.allProducts  = event.detail.response;
+            this.groupName = event.detail.response.filter((prod) => {
+                console.log(prod.id, this.routeData.groupId);
+                return prod.id === parseInt(this.routeData.groupId);
+            })
+        }else{
+          this.toastMessage = "Products are not available";
+          this.$.toast.open();
         }
     }
     handleError(event){
@@ -41,13 +65,16 @@ class ProductDetails extends PolymerElement{
       }
     static get template(){
         return html `
-            <h1>Details</h1>
+            <h1>Product Details</h1>
+            <h3>Group Name: {{groupName.0.name}}</h3>
+            
             <paper-toast id="toast" text="[[toastMessage]]" with-backdrop horizontal-align="center" vertical-align="middle"></paper-toast>
             <div class="col-sm-12 d-flex justify-content-center align-content-center">
                 <paper-spinner active="{{loadingData}}"></paper-spinner>
             </div>
             <app-route route="{{route}}" pattern="/:groupId/:productId" data="{{routeData}}" tail="{{subroute}}"></app-route>
             <div class="col-sm-6 col-md-6 offset-sm-2 offset-md-2">
+                {{productDetails.name}}
                 <h3>Other Products</h3>
                 <ul style="list-unstyled">
                     <template is="dom-repeat" items="{{productGroups}}">
@@ -76,6 +103,17 @@ class ProductDetails extends PolymerElement{
                 handle-as="json"
                 loading="{{loadingData}}"
                 >
+      </iron-ajax>
+      <iron-ajax
+            auto
+            url="[[detailsUrl]]/groups"
+            method="get"
+            content-type="application/json"
+            on-response="handleGroup"
+            on-error="handleError"
+            handle-as="json"
+            loading="{{loadingData}}"
+            >
       </iron-ajax>
      
         `
