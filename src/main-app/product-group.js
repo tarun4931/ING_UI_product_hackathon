@@ -14,7 +14,6 @@ import '@polymer/paper-item/paper-item.js';
 class ProductGroup extends PolymerElement{
     constructor(){
         super();
-        
     }
     static get properties(){
         return {

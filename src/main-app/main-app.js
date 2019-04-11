@@ -76,6 +76,11 @@ color: #ff6200;
 <app-toolbar>
   <paper-icon-button on-click="_toggleDrawer" aria-label="Icon Button" icon="menu"></paper-icon-button>
   <div main-title>ING Products</div>
+  <select name="language">
+        <option>--select--</option>
+        <option value="en">ENG</option>
+        <option value="nl">NL</option>
+  </select>
 </app-toolbar>
 <app-drawer-layout has-scrolling-region responsive-width="940px">
     <app-drawer swipe-open slot="drawer">
